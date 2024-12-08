@@ -4,6 +4,7 @@ tmp
 sendgrid.env
 keys
 package-lock.json
+yarn.lock
 config.gypi
 client/yarn.lock
 client/package.json
