@@ -11,12 +11,12 @@ export default function Meli() {
   const redirectUri = 'https://meli-facturin-652baafb21fd.herokuapp.com/meli';
   const authUrl = `https://auth.mercadolibre.com.ar/authorization?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}`;
 
-  const getAuthorizationCode = async () => {
+  const getAuthorizationCode = async (codeParam) => {
     const body = {
       grant_type: 'authorization_code',
       client_id: clientId,
       client_secret: clientSecret,
-      code: code,
+      code: codeParam,
       redirect_uri: redirectUri
     }
     const meliTokens = await utils.postRequest(API_URL, body);
@@ -30,7 +30,7 @@ export default function Meli() {
     setCode(codeParam);
 
     if (codeParam) {
-      const tokens = getAuthorizationCode();
+      const tokens = getAuthorizationCode(codeParam);
       console.log('Tokens', tokens)
     }
   }, []);
