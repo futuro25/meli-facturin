@@ -5,12 +5,12 @@ if (window.location.hostname === 'localhost') {
   config = require("./local.config.js");  
 }
 
-if (window.location.hostname === 'crear-app-a94ef456bf1a.herokuapp.com') {
+if (window.location.hostname === 'meli-facturin-652baafb21fd.herokuapp.com') {
   console.log('env dev')
   config = require("./dev.config.js");  
 }
 
-if (window.location.hostname === 'crear-prod-532897b63fc6.herokuapp.com' || window.location.hostname === 'facturacion.institutocrear.edu.ar') {
+if (window.location.hostname === 'meli-facturin-652baafb21fd.herokuapp.com') {
   console.log('env prod')
   config = require("./prod.config.js");  
 }
