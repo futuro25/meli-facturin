@@ -20,8 +20,8 @@ export const getRequest = async (url) => {
     });
 }
 
-export const postRequest = async (url, body) => {
-  return await axios.post(url, body)
+export const postRequest = async (url, body, headers={}) => {
+  return await axios.post(url, body, headers)
     .then(function (response) {
       return response
     })
