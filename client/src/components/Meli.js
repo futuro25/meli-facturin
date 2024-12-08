@@ -3,12 +3,12 @@ import Button from "./common/Button";
 import * as utils from '../utils/utils'
 
 export default function Meli() {
-  const [code, setCode] = useState('TG-6755bd9b85a62800018df18a-99922095');
+  const [code, setCode] = useState('');
 
   const API_URL = "https://api.mercadolibre.com/auth/token"
   const clientId = '2180357168247496';
   const clientSecret = 'G9F3m1GsVRFN5bvIjNXu1nmD4WB60O7t';
-  const redirectUri = 'https://madstage-a16bef77c5b8.herokuapp.com/login';
+  const redirectUri = 'https://meli-facturin-652baafb21fd.herokuapp.com/meli';
   const authUrl = `https://auth.mercadolibre.com.ar/authorization?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}`;
 
   const getAuthorizationCode = async () => {
@@ -24,14 +24,15 @@ export default function Meli() {
   }
 
   useEffect(() => {
-    if (code) {
-      const tokens = getAuthorizationCode();
-      console.log('Tokens', tokens)
-    }
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const codeParam = urlParams.get('code');
     setCode(codeParam);
+
+    if (codeParam) {
+      const tokens = getAuthorizationCode();
+      console.log('Tokens', tokens)
+    }
   }, []);
 
   return (
