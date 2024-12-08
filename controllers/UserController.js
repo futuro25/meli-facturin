@@ -1,12 +1,15 @@
 "use strict"
 
-const logger      = require('../utils/logger');
-const User        = require('../models/user.model');
-const sendEmail = require('../utils/emails');
+const self            = {};
+const qs              = require('qs');
+const axios           = require('axios');
+const config          = require('../config');
+const utils           = require('../utils/utils');
+const sendEmail       = require('../utils/emails');
+const logger          = require('../utils/logger');
+const User            = require('../models/user.model');
 const utilsController = require('./UtilsController');
-const self        = {};
-const utils       = require('../utils/utils');
-const config = require('../config');
+
 const API_URL = config.api_url;
 
 self.createUser = async (req, res) => {
@@ -138,5 +141,41 @@ self.login = async (req, res) => {
     res.status(401).json({error: e.message})
   }
 }
+
+self.meliCode = async (req, res) => {
+  const client_id = "2180357168247496"
+  const client_secret = "G9F3m1GsVRFN5bvIjNXu1nmD4WB60O7t"
+  const codeParam = 'TG-675605b5a38fee00013c014d-99922095';
+  const grant_type = "authorization_code"
+  const redirect_uri = "https://meli-facturin-652baafb21fd.herokuapp.com/meli"
+  const url = "https://api.mercadolibre.com/auth/token"
+
+  const body = {
+    grant_type,
+    client_id,
+    client_secret,
+    code: codeParam,
+    redirect_uri,
+  }
+  const encodedBody = qs.stringify(body);
+
+  try {
+    axios.post(url, encodedBody, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}})
+      .then(response => {
+        console.log(response.data);
+        res.json(response.data);
+      })
+      .catch(error => {
+        console.error('Error en la solicitud:', error);
+        res.json(error);
+      });
+
+  } catch (e) {
+    logger.error('validate login', e.message)
+    console.log('validate login', e.message)
+    res.status(401).json({error: e.message})
+  }
+}
+
 
 module.exports = self;

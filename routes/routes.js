@@ -16,6 +16,7 @@ router.post('/users', (req, res, next) => userController.createUser(req, res, ne
 router.patch('/users/:userId', (req, res, next) => userController.getUserByIdAndUpdate(req, res, next));
 router.delete('/users/:userId', (req, res, next) => userController.deleteUserById(req, res, next));
 router.post('/users/login', (req, res, next) => userController.login(req, res, next));
+router.post('/meli/code', (req, res, next) => userController.meliCode(req, res, next));
 
 // UTILS
 router.post('/resources', (req, res, next) => utilsController.upload(req, res, next));
