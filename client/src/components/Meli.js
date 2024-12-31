@@ -4,24 +4,30 @@ import * as utils from '../utils/utils'
 
 export default function Meli() {
   const [code, setCode] = useState('');
+  const [error, setError] = useState('');
 
-  // const API_URL = '/api/meli/code';
   const API_URL = 'https://api.mercadolibre.com/auth/token';
   const clientId = '2180357168247496';
   const clientSecret = 'G9F3m1GsVRFN5bvIjNXu1nmD4WB60O7t';
   const redirectUri = 'https://meli-facturin-652baafb21fd.herokuapp.com/meli';
+  // const redirectUri = 'http://localhost:3000/meli';
   const authUrl = `https://auth.mercadolibre.com.ar/authorization?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}`;
 
   const getAuthorizationCode = async (codeParam) => {
-    const body = {
-      grant_type: 'authorization_code',
-      client_id: clientId,
-      client_secret: clientSecret,
-      code: codeParam,
-      redirect_uri: redirectUri
+    try {
+      const body = {
+        grant_type: 'authorization_code',
+        client_id: clientId,
+        client_secret: clientSecret,
+        code: codeParam,
+        redirect_uri: redirectUri,
+        state: 'ABC123'
+      }
+      const meliTokens = await utils.postRequest(API_URL, body, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}});
+      return meliTokens;
+    } catch (error) {
+      setError(error)
     }
-    const meliTokens = await utils.postRequest(API_URL, body, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}});
-    return meliTokens;
   }
 
   useEffect(() => {
@@ -48,6 +54,14 @@ export default function Meli() {
                   (<></>)
                   :
                   (<a className="text-blue-600" href={authUrl}>Connect to Meli</a>)
+                }
+
+                {
+                  error !== '' && (
+                    <div className="flex items-center justify-center text-red-500">
+                      {error.code + ' ' + error.stack}
+                    </div>
+                  )
                 }
               </div>
             </div>
