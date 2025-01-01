@@ -145,7 +145,7 @@ self.login = async (req, res) => {
 self.meliCode = async (req, res) => {
   const client_id = "2180357168247496"
   const client_secret = "G9F3m1GsVRFN5bvIjNXu1nmD4WB60O7t"
-  const codeParam = 'TG-675605b5a38fee00013c014d-99922095';
+  const codeParam = 'TG-6773fa3bfb44a200014aef9d-99922095';
   const grant_type = "authorization_code"
   const redirect_uri = "https://meli-facturin-652baafb21fd.herokuapp.com/meli"
   const url = "https://api.mercadolibre.com/auth/token"
